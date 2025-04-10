@@ -7,11 +7,17 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import { Provider } from "react-redux";
 import store from "./app/store.js";
+import Profile from "./components/Profile.jsx";
+import Home from "./pages/Home.jsx";
+import Onboard from "./components/OnBoard.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import Requests from "./pages/Requests.jsx";
+import Connections from "./pages/Connections.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Onboard />,
   },
   {
     path: "/login",
@@ -20,6 +26,32 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/app",
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "connections",
+        element: <Connections/>,
+      },
+      {
+        path: "requests",
+        element: <Requests />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+    ],
   },
 ]);
 

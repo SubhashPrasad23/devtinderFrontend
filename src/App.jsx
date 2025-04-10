@@ -1,6 +1,7 @@
+import MainLayout from "./layout/MainLayout";
 
 function App() {
-  return <div>feed</div>;
+  return <MainLayout />;
 }
 
 export default App;
