@@ -1,15 +1,12 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
-  const navigate = useNavigate()
-  const [showParticles, setShowParticles] = useState(true)
-  const [showBackground, setShowBackground] = useState(true)
+  const navigate = useNavigate();
+  const [showParticles, setShowParticles] = useState(true);
+  const [showBackground, setShowBackground] = useState(true);
 
-  
   // Generate random particles
   const particles = Array.from({ length: 50 }, (_, i) => ({
     id: i,
@@ -18,27 +15,24 @@ const Onboarding = () => {
     size: Math.random() * 5 + 2,
     duration: Math.random() * 20 + 10,
     delay: Math.random() * 2,
-  }))
+  }));
 
   useEffect(() => {
-    const token=document.cookie
+    const token = document.cookie;
     const timer = setTimeout(() => {
-      setShowParticles(false)
+      setShowParticles(false);
 
       // Navigate after animation completes
       setTimeout(() => {
-        navigate(token ? "/app" : "/login")
-      }, 1000)
-    }, 4000)
+        navigate(token ? "/app" : "/login");
+      }, 1000);
+    }, 4000);
 
-    return () => clearTimeout(timer)
-  }, [navigate])
-
- 
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen overflow-hidden bg-black  relative flex flex-col items-center justify-center">
-      {/* Split background animation - left half */}
       <motion.div
         className="absolute inset-y-0 left-0 w-1/2 z-0 bg-gradient-to-b from-gray-900 to-black "
         initial={{ x: "-100%" }}
@@ -55,7 +49,6 @@ const Onboarding = () => {
         }}
       />
 
-      {/* Split background animation - right half */}
       <motion.div
         className="absolute inset-y-0 right-0 w-1/2 z-0 bg-gradient-to-b from-gray-900 to-black "
         initial={{ x: "100%" }}
@@ -72,7 +65,6 @@ const Onboarding = () => {
         }}
       />
 
-      {/* Animated particles */}
       {showParticles &&
         particles.map((particle) => (
           <motion.div
@@ -104,7 +96,6 @@ const Onboarding = () => {
           />
         ))}
 
-      {/* Animated glow effect */}
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full bg-purple-500 opacity-20 z-0"
         initial={{ scale: 0.8 }}
@@ -120,7 +111,6 @@ const Onboarding = () => {
         style={{ filter: "blur(100px)" }}
       />
 
-      {/* Content */}
       <motion.div
         className="relative z-20 text-center"
         initial={{ opacity: 0 }}
@@ -172,11 +162,8 @@ const Onboarding = () => {
             connection
           </span>
         </motion.p>
-
-     
       </motion.div>
 
-      {/* Animated rings */}
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
         {[1, 2, 3].map((ring) => (
           <motion.div
@@ -201,8 +188,7 @@ const Onboarding = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Onboarding
-
+export default Onboarding;

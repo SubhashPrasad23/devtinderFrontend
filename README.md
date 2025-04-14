@@ -1,12 +1,33 @@
-# React + Vite
+# 💻 DevTinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **DevTinder** – a modern platform for developers to discover and connect with like-minded tech folks. Swipe right to match, chat in real-time, and even customize your profile with an awesome image!
 
-Currently, two official plugins are available:
+👉 **Live Demo:**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔥 What’s Inside?
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Here’s what this frontend does:
+
+- 🔐 **Login & Signup** with JWT and secure cookies
+- 👥 **Swipe to Connect** – Like a dev's profile or skip it
+- 💬 **Real-Time Chat** – Instant messaging using Socket.IO
+- 🧑‍🎨 **Profile Editor** – Update info and upload a profile picture
+- ☁️ **Image Upload** – Uses Cloudinary through backend (Multer)
+- 🌗 **Responsive UI** – Looks good on all screens
+
+---
+
+## 🛠 Tech Stack
+
+This frontend is built with:
+
+- **React.js** – UI library
+- **Redux toolkit** – State management
+- **Tailwind CSS ** – For fast and beautiful styling
+- **Socket.IO** – Real-time communication
+- **Axios** – To connect with the backend
+- **Framer Motion** – For smooth animations
+
+---

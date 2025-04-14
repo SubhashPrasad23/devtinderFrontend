@@ -13,6 +13,7 @@ import Onboard from "./components/OnBoard.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Requests from "./pages/Requests.jsx";
 import Connections from "./pages/Connections.jsx";
+import Chat from "./pages/Chat.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "requests",
         element: <Requests />,
+      },
+      {
+        path: "chat",
+        element: <Chat />,
       },
       {
         path: "profile",

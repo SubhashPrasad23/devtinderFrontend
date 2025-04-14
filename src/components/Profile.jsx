@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Edit, Save, Upload, X } from "lucide-react";
@@ -10,7 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addUser } from "../features/userSlice";
 
-export default function Profile() {
+
+const Profile=()=> {
   const user = useSelector((store) => store?.user);
 
   const [formData, setFormData] = useState({
@@ -27,6 +26,7 @@ export default function Profile() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -248,7 +248,7 @@ export default function Profile() {
 
               <div className="mb-4">
                 <label className="block text-gray-300 mb-2" htmlFor="skills">
-                  Skills (comma separated)
+                  Skills
                 </label>
                 <input
                   id="skills"
@@ -272,7 +272,6 @@ export default function Profile() {
                   id="yearsOfExperience"
                   name="yearsOfExperience"
                   type="number"
-                  min="0"
                   value={formData.yearsOfExperience}
                   onChange={handleChange}
                   disabled={!isEditing}
@@ -343,3 +342,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default Profile

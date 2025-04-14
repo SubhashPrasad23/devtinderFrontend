@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { LogOut, MessageCircle, User, Code, Menu, X } from "lucide-react";
+import { LogOut, User, Code, Menu, X } from "lucide-react";
 import axios from "axios";
 import { capitalized } from "../utils/Helper";
 import MobileMenu from "./MobileMenu";
@@ -33,8 +33,8 @@ const Header = () => {
 
   return (
     <header className="bg-gray-900/80 backdrop-blur-md  border-b border-purple-500/30 py-4 md:px-10 px-5 sticky top-0 z-50 shadow-lg shadow-purple-500/5">
-      <div className="container mx-auto flex items-center justify-between">
-        <NavLink to="/app" className="flex items-center">
+      <div className="container w-full mx-auto flex items-center justify-between">
+        <NavLink to="/app" className=" flex items-center ">
           <motion.div
             initial={{ rotate: -10, scale: 0.9 }}
             animate={{ rotate: 0, scale: 1 }}
@@ -77,9 +77,7 @@ const Header = () => {
               className={({ isActive }) => `
                 flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 hover:text-purple-300
                 ${
-                  isActive
-                    ? " text-purple-300 font-semibold"
-                    : " text-gray-300"
+                  isActive ? " text-purple-300 font-semibold" : " text-gray-300"
                 }
               `}
             >
@@ -104,10 +102,10 @@ const Header = () => {
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowLogoutMenu((prev) => !prev)}
             >
-              <div className="h-10 w-10 rounded-full p-1 bg-purple-500/20 border border-purple-500/30 place-content-center">
-                <p>
+              <div className="h-10 w-10 rounded-full  bg-purple-500/20 border border-purple-500/30 place-content-center">
+              {user?.photoURL !== ""?<img src={user?.photoURL} className="h-full w-full object-cover rounded-full " alt="profileImg"/>:  <p>
                   {user?.firstName ? capitalized(user.firstName.charAt(0)) : ""}
-                </p>
+                </p>}
               </div>
             </motion.button>
             <AnimatePresence>

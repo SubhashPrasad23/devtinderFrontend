@@ -7,7 +7,7 @@ import noDataFound from "../assets/lottie/noDataFound.json";
 import Loading from "../components/Loading";
 import Lottie from "lottie-react";
 
-const Body = () => {
+const Home = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.feed);
@@ -18,7 +18,6 @@ const Body = () => {
         withCredentials: true,
       });
       dispatch(addFeed(response?.data?.users));
-      console.log(response?.data?.users);
     } catch (error) {
       console.log(error);
     } finally {
@@ -30,10 +29,12 @@ const Body = () => {
     fetchFeed();
   }, []);
 
- 
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-5 py-8">
+    <div className="flex-1 flex flex-col items-center justify-center px-5 py-8 overflow-hidden">
       {userData?.length === 0 ? (
         <div className="w-full flex flex-col items-center justify-center text-white">
           <div className="w-40">
@@ -54,4 +55,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default Home;

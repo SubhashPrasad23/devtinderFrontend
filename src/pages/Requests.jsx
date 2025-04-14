@@ -20,6 +20,8 @@ const Requests = () => {
             withCredentials: true,
           }
         );
+       
+    
         dispatch(addRequests(response.data.data));
         console.log(response.data.data);
       } catch (error) {
@@ -51,7 +53,7 @@ const Requests = () => {
 
   return (
     <div className="h-full w-full flex-1 flex flex-col items-center  px-5 pb-5">
-      <div className="md:w-3/5 w-full mx-auto flex-1 flex flex-col justify-center">
+      <div className="md:w-3/5 w-full mx-auto flex-1 flex flex-col ">
         {request.length > 0 ? (
           <div className="w-full ">
             {request.map((request) => (
@@ -63,7 +65,7 @@ const Requests = () => {
         ) : (
           <div className="flex-1  flex flex-col items-center justify-center">
             <UserPlus className="w-16 h-16 text-gray-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-600">
+            <h3 className="md:text-xl font-bold mb-2 text-gray-600">
               No pending requests
             </h3>
             <p className="mb-6 text-gray-400 text-center">

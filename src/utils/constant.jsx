@@ -1,4 +1,4 @@
-import { Users, UserPlus } from "lucide-react";
+import { Users, UserPlus, MessageSquare } from "lucide-react";
 export const navItems = [
     {
       path: "connections",
@@ -9,5 +9,10 @@ export const navItems = [
       path: "requests",
       icon: <UserPlus className="w-5 h-5" />,
       label: "Requests",
+    },
+    {
+      path: "chat",
+      icon: <MessageSquare className="w-5 h-5" />,
+      label: "Chat",
     },
   ];

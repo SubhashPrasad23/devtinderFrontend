@@ -9,9 +9,9 @@ import Loading from "../components/Loading.jsx";
 
 function Connections() {
   const [loading, setLoading] = useState(true);
-  const connections = useSelector((store) => store.connections || []);
+  const connections = useSelector((store) => store?.connections || []);
   const dispatch = useDispatch();
-
+console.log(connections)
   useEffect(() => {
     const fetchConnections = async () => {
       try {
@@ -36,19 +36,19 @@ function Connections() {
 
   return (
     <div className="flex-1 flex flex-col items-center px-5 pb-5">
-      <div className="md:w-3/5 w-full mx-auto flex-1 flex flex-col justify-center">
-        {connections.length > 0 ? (
+      <div className="md:w-3/5 w-full mx-auto flex-1 flex flex-col ">
+        {connections?.length > 0 ? (
           <div className="w-full  ">
-            {connections.map((connection) => (
-              <div key={connection._id}>
-                <ConnectionCard connection={connection} />
+            {connections?.map((connection) => (
+              <div key={connection?._id}>
+               {connection&& <ConnectionCard connection={connection} />}
               </div>
             ))}
           </div>
         ) : (
           <div className="h-full w-full flex flex-1 flex-col items-center justify-center ">
             <UserCheck className="w-16 h-16 text-gray-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-600">
+            <h3 className="md:text-xl font-bold mb-2 text-gray-600">
               No connections yet
             </h3>
             <p className="mb-6 text-gray-400">
