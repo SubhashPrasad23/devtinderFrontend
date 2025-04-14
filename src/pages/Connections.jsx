@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { addConnection } from "../features/connectionSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import ConnectionCard from "../components/connectionCard.jsx";
+import ConnectionCard from "../components/ConnectionCard.jsx";
 import Loading from "../components/Loading.jsx";
 
 function Connections() {
