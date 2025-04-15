@@ -17,7 +17,7 @@ const UserCard = ({ data }) => {
   const handleSendRequest = async (status, id) => {
     try {
       await axios.post(
-        `http://localhost:7000/request/send/${status}/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/request/send/${status}/${id}}`,
         {},
         { withCredentials: true }
       );

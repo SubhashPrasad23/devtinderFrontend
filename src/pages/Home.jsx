@@ -14,9 +14,12 @@ const Home = () => {
 
   const fetchFeed = async () => {
     try {
-      const response = await axios.get("http://localhost:7000/user/feed", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/user/feed`,
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(addFeed(response?.data?.users));
     } catch (error) {
       console.log(error);

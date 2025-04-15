@@ -13,7 +13,7 @@ const MainLayout = () => {
   }, []);
 
   const fetchUser = async () => {
-    const response = await axios.get("http://localhost:7000/profile/view", {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/profile/view`, {
       withCredentials: true,
     });
     dispatch(addUser(response?.data?.data));

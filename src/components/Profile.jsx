@@ -80,7 +80,7 @@ const Profile=()=> {
       if (formData.profileImg) form.append("photoURL", formData.profileImg);
 
       const response = await axios.post(
-        "http://localhost:7000/profile/edit",
+        `${import.meta.env.VITE_API_BASE_URL}/profile/edit`,
         form,
         {
           withCredentials: true,

@@ -7,7 +7,6 @@ const Onboarding = () => {
   const [showParticles, setShowParticles] = useState(true);
   const [showBackground, setShowBackground] = useState(true);
 
-  // Generate random particles
   const particles = Array.from({ length: 50 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
@@ -22,7 +21,6 @@ const Onboarding = () => {
     const timer = setTimeout(() => {
       setShowParticles(false);
 
-      // Navigate after animation completes
       setTimeout(() => {
         navigate(token ? "/app" : "/login");
       }, 1000);

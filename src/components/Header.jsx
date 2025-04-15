@@ -16,7 +16,7 @@ const Header = () => {
   const menuRef = useRef(null);
 
   const handleLogout = () => {
-    axios.post("http://localhost:7000/logout", {}, { withCredentials: true });
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}/logout`, {}, { withCredentials: true });
     navigate("/login");
   };
 

@@ -16,7 +16,7 @@ console.log(connections)
     const fetchConnections = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/user/connections",
+          `${import.meta.env.VITE_API_BASE_URL}/user/connections`,
           { withCredentials: true }
         );
         dispatch(addConnection(response?.data?.data));

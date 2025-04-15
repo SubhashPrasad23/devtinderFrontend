@@ -15,7 +15,7 @@ const Requests = () => {
     const fetchRequests = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/user/requests/received",
+          `${import.meta.env.VITE_API_BASE_URL}/user/requests/received`,
           {
             withCredentials: true,
           }
@@ -37,7 +37,7 @@ const Requests = () => {
   const handleRequest = async (requestId, status) => {
     try {
       const response = await axios.post(
-        `http://localhost:7000/request/review/${status}/${requestId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/request/review/${status}/${requestId}`,
         {},
         { withCredentials: true }
       );
