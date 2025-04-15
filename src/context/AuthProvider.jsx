@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
         dispatch(addUser(response?.data?.data));
       } catch (error) {
-        console.log("User not authenticated");
+        console.error(error);
       } finally {
         setLoading(false);
       }

@@ -8,8 +8,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("modi@gmail.com");
-  const [password, setPassword] = useState("modi@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,10 +56,8 @@ const Login = () => {
       );
 
       if (res.status === 200) {
-        console.log(res);
         await dispatch(addUser(res.data));
         toast.success("Login successful!", { autoClose: 3000 });
-        console.log("✅ Navigating to /app..."); 
         navigate("/app");
       }
     } catch (error) {

@@ -11,7 +11,6 @@ function Connections() {
   const [loading, setLoading] = useState(true);
   const connections = useSelector((store) => store?.connections || []);
   const dispatch = useDispatch();
-console.log(connections)
   useEffect(() => {
     const fetchConnections = async () => {
       try {
@@ -21,7 +20,7 @@ console.log(connections)
         );
         dispatch(addConnection(response?.data?.data));
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }

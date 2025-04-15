@@ -26,7 +26,6 @@ const UserCard = ({ data }) => {
       console.error("Error sending request:", error);
     }
   };
-  console.log(data);
   return (
     <TinderCard
       onSwipe={(dir) => handleSwipe(dir, data._id)}
