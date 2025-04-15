@@ -1,17 +1,22 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
-    const token = document.cookie;
-    const navigate = useNavigate();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login", { replace: true });
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return ;
+  }
   
-    useEffect(() => {
-      if (!token) {
-        navigate("/login", { replace: true });
-      }
-    }, [navigate, token]);
-  
-    return token ? children : null;
-  };
-  
-  export default PrivateRoute
+  return user ? children : null;
+};
+
+export default PrivateRoute;

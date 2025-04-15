@@ -114,12 +114,10 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
       >
         <AnimatePresence>
           {messages.map((msg, i) => (
-            <motion.div
+            <div
               key={i}
               className={`mb-4 flex ${msg?.senderId === loggedInUser?._id ? "justify-end" : "justify-start"}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
+             
             >
               <div
                 className={`max-w-[80%] p-3 rounded-lg ${
@@ -131,7 +129,7 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
                 <p>{msg.text}</p>
                 <span className="text-xs opacity-70 mt-1 block text-right">{msg.time}</span>
               </div>
-            </motion.div>
+            </div>
           ))}
           <div ref={scrollRef} />
         </AnimatePresence>

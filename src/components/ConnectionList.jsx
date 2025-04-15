@@ -40,7 +40,7 @@ const ConnectionsList = ({ connections, selectedId, onSelectConnection, isMobile
           </button>
         )}
       </h2>
-      <div className="bg-black flex-1 h-full ">
+      <div className="bg-gray-900/50 flex-1 h-full ">
         {connections.map((connection) => (
           <motion.div
             key={connection?._id}

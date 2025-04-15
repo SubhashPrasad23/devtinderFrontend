@@ -14,6 +14,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Requests from "./pages/Requests.jsx";
 import Connections from "./pages/Connections.jsx";
 import Chat from "./pages/Chat.jsx";
+import { AuthProvider } from "./context/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
+  <AuthProvider>
     <RouterProvider router={router} />
+    </AuthProvider>
   </Provider>
 );

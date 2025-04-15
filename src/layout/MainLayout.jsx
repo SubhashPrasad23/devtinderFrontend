@@ -16,8 +16,12 @@ const MainLayout = () => {
     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/profile/view`, {
       withCredentials: true,
     });
+    console.log(response,"rrrrrrrrrrrrrr")
     dispatch(addUser(response?.data?.data));
   };
+
+
+
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-gray-700 to-gray-900 flex flex-col">
