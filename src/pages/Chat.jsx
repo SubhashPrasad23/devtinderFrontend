@@ -13,7 +13,6 @@ import { useMobile } from "../hooks/useMobile";
 const Chat = () => {
   const [selectedConnection, setSelectedConnection] = useState(null);
   const [message, setMessage] = useState("");
-  const [chatCache, setChatCache] = useState({});
   const [messages, setMessages] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
@@ -23,16 +22,27 @@ const Chat = () => {
   const socketRef = useRef(null);
   const isMobile = useMobile();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   useEffect(() => {
     socketRef.current = createSocketConnection();
+    const handleReceivedMessage = ({
+      firstName,
+      text,
+      senderId,
+      connectionId,
+    }) => {
+      if (!selectedConnection || connectionId !== selectedConnection._id)
+        return;
+
+      setMessages((prev) => [...prev, { firstName, text, senderId }]);
+    };
+
+    socketRef.current.on("receivedMessage", handleReceivedMessage);
+
     return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-      }
+      socketRef.current.off("receivedMessage", handleReceivedMessage);
+      socketRef.current.disconnect();
     };
   }, []);
 
@@ -47,11 +57,12 @@ const Chat = () => {
         );
         dispatch(addConnection(response?.data?.data));
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching connections", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchConnections();
   }, []);
 
@@ -65,7 +76,7 @@ const Chat = () => {
     if (!socketRef.current) return;
 
     setSelectedConnection(connection);
-
+    setMessages([]);
     socketRef.current.emit(
       "join",
       connection._id,
@@ -73,74 +84,38 @@ const Chat = () => {
       connection.firstName
     );
 
-    socketRef.current.off("receivedMessage");
-
-    if (chatCache[connection?._id]) {
-      setMessages(chatCache[connection._id]);
-    } else {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/chat/${connection?._id}`,
-          {
-            withCredentials: true,
-          }
-        );
-        const msgs = response.data.messages || [];
-        setMessages(msgs);
-        setChatCache((prev) => ({
-          ...prev,
-          [connection._id]: msgs,
-        }));
-      } catch (error) {
-        console.log("Error fetching chat messages:", error);
-      }
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/chat/${connection._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setMessages(response.data.messages || []);
+    } catch (error) {
+      console.error("Error fetching chat messages:", error);
     }
-
-    socketRef.current.on("receivedMessage", ({ firstName, text, senderId }) => {
-      setMessages((prev) => {
-        const updated = [...prev, { firstName, text, senderId }];
-        setChatCache((prevCache) => ({
-          ...prevCache,
-          [connection._id]: updated,
-        }));
-        return updated;
-      });
-    });
   };
 
   const handleSendMessage = () => {
     if (!socketRef.current || !selectedConnection || !message.trim()) return;
 
-    socketRef.current.emit("sendMessage", {
-      connectionId: selectedConnection?._id,
-      senderId: loggedInUser?._id,
+    const newMessage = {
+      connectionId: selectedConnection._id,
+      senderId: loggedInUser._id,
       firstName: loggedInUser.firstName,
       text: message,
-    });
+    };
 
-    setMessages((prev) => {
-      const updated = [
-        ...prev,
-        {
-          firstName: loggedInUser.firstName,
-          text: message,
-          senderId: loggedInUser?._id,
-        },
-      ];
-      setChatCache((prevCache) => ({
-        ...prevCache,
-        [selectedConnection._id]: updated,
-      }));
-      return updated;
-    });
-
+    socketRef.current.emit("sendMessage", newMessage);
+    setMessages((prev) => [...prev, newMessage]);
     setMessage("");
   };
 
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full  flex flex-col md:flex-row md:h-[calc(100vh-90px)] h-[calc(100vh-70px)] overflow-hidden border border-gray-700 relative mobile-chat-container">
+    <div className="w-full flex flex-col md:flex-row md:h-[calc(100vh-90px)] h-[calc(100vh-70px)] overflow-hidden border border-gray-700 relative mobile-chat-container">
       {connections.length > 0 ? (
         <>
           <ConnectionsList
