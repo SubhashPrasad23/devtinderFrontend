@@ -8,7 +8,7 @@ import noImage from "../assets/image/noImage.png";
 
 const UserCard = ({ data }) => {
   const dispatch = useDispatch();
-
+console.log(data)
   const handleSwipe = (direction, id) => {
     console.log(direction);
     handleSendRequest(direction === "left" ? "ignored" : "interested", id);
@@ -42,18 +42,18 @@ const UserCard = ({ data }) => {
           transition={{ duration: 0.3 }}
           className="bg-black overflow-hidden shadow-[2px_4px_0px_4px_gray] rounded-2xl h-full flex flex-col"
         >
-          <div className="h-72 w-full flex-shrink-0">
+          <div className="h-72 w-full flex-shrink-0  ">
             {data?.photoURL ? (
               <img
                 src={data?.photoURL}
                 alt="Profile"
-                className="h-full w-full"
+                className="h-full w-full object-cover object-top"
               />
             ) : (
               <img
                 src={noImage}
                 alt="No_Image"
-                className="h-full w-full"
+                className="h-full w-full object-cover "
               />
             )}
           </div>
@@ -78,7 +78,7 @@ const UserCard = ({ data }) => {
                   </div>
                 )}
 
-              {data?.yearOfExperience && (
+              {(data?.yearOfExperience && data?.yearOfExperience>0 ) && (
                 <div className="text-gray-300 mb-2 text-xs sm:text-sm">
                   <span>{data.yearOfExperience}</span>
                   <span className="ml-1">

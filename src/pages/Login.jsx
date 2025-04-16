@@ -139,7 +139,7 @@ const Login = () => {
                   errors.password ? "border-red-500" : "border-gray-600"
                 } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500`}
                 placeholder="••••••••"
-                autoComplete="true" // <-- Add this line
+                autoComplete="true" 
 
                 animate={shakeIfError("password")}
                 transition={{ duration: 0.4 }}
