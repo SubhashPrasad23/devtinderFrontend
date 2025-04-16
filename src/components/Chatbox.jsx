@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useSelector } from "react-redux"
@@ -81,11 +83,11 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
             <Menu className="h-6 w-6 text-white" />
           </button>
         )}
-        <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border-2 border-purple-500/30 flex items-center justify-center bg-purple-500/10 ">
+        <div className="w-10 h-10 flex-shrink-0 rounded-full overflow-hidden mr-3 border-2 border-purple-500/30 flex items-center justify-center bg-purple-500/10">
           {selectedConnection?.photoURL && selectedConnection?.photoURL !== "" ? (
             <img
-              src={selectedConnection.photoURL || "/placeholder.svg"}
-              className="h-full w-full object-cover"
+              src={selectedConnection.photoURL}
+              className="h-full w-full "
               alt="profile"
             />
           ) : (
@@ -94,8 +96,8 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
             </span>
           )}
         </div>
-        <div>
-          <h3 className="font-bold text-white">
+        <div className="min-w-0 overflow-hidden">
+          <h3 className="font-bold text-white truncate">
             {selectedConnection.firstName.charAt(0).toUpperCase() + selectedConnection.firstName.slice(1)}{" "}
             {selectedConnection.lastName.charAt(0).toUpperCase() + selectedConnection.lastName.slice(1)}
           </h3>
@@ -104,10 +106,9 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
 
       <div
         ref={messagesContainerRef}
-        className="flex-1 p-4 overflow-y-auto bg-gray-900/50 hideScrollbar"
+        className="flex-1 p-4 overflow-y-auto hideScrollbar bg-gray-900/50"
         style={{
           height: "calc(100% - 128px)",
-          overflowY: "auto",
           display: "flex",
           flexDirection: "column",
         }}
@@ -117,17 +118,16 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
             <div
               key={i}
               className={`mb-4 flex ${msg?.senderId === loggedInUser?._id ? "justify-end" : "justify-start"}`}
-             
             >
               <div
-                className={`max-w-[80%] p-3 rounded-lg ${
+                className={`max-w-[80%] p-3 rounded-lg  ${
                   msg?.senderId === loggedInUser?._id
                     ? "bg-purple-600 text-white rounded-tr-none"
                     : "bg-gray-700 text-gray-100 rounded-tl-none"
                 }`}
               >
-                <p>{msg.text}</p>
-                <span className="text-xs opacity-70 mt-1 block text-right">{msg.time}</span>
+                <p className="break-words">{msg.text}</p>
+                {/* <span className="text-xs opacity-70 mt-1 block text-right">{msg.time}</span> */}
               </div>
             </div>
           ))}
@@ -148,14 +148,14 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
               value={message}
               onChange={(e) => onChange(e.target.value)}
               placeholder="Type your message..."
-              className="w-full bg-transparent text-white p-3 outline-none resize-none h-12 max-h-32 hideScrollbar"
+              className="w-full bg-transparent text-white p-3 outline-none resize-none h-12 max-h-32 overflow-y-auto overflow-x-hidden"
               style={{ minHeight: "48px" }}
               onKeyDown={handleKeyPress}
             />
           </motion.div>
           <motion.button
             type="submit"
-            className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full h-12 w-12 flex items-center justify-center cursor-pointer"
+            className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full h-12 w-12 flex items-center justify-center cursor-pointer flex-shrink-0"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={!message.trim()}
