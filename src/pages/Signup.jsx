@@ -92,6 +92,7 @@ const Signup = () => {
         }, 5000);
       }
     } catch (err) {
+      console.log(err,"signup")
       toast.error(err.response?.data || "Signup failed. Please try again.");
     } finally {
       setIsLoading(false);

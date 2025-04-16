@@ -86,15 +86,18 @@ const Profile=()=> {
           withCredentials: true,
         }
       );
-      console.log(response, "response");
+      console.log(response.status, "response");
       dispatch(addUser(response.data.data));
       toast.success("Profile updated successfully!");
+      if(response.status==200){
+        setIsEditing(false);
+
+      }
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
-      setIsEditing(false);
     }
   };
 
@@ -133,7 +136,7 @@ const Profile=()=> {
                       ? formData.profileImg
                       : URL.createObjectURL(formData.profileImg)
                   }
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-fit"
                   alt="Profile"
                 />
               )}
@@ -299,7 +302,7 @@ const Profile=()=> {
                 type="submit"
                 className={`${
                   !isEditing && "hidden"
-                } flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 rounded-lg text-white font-medium shadow-lg transition-all`}
+                } flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 rounded-lg text-white font-medium shadow-lg transition-all cursor-pointer`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isLoading}
