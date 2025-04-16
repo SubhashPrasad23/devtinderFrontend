@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState, useRef } from "react"
 import ConnectionsList from "../components/ConnectionList"
 import Chatbox from "../components/Chatbox"
