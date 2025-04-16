@@ -68,7 +68,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-gray-800/80 md:bg-gradient-to-b from-gray-900 to-black flex flex-col justify-center items-center p-4">
       <ToastContainer position="top-right" />
       <motion.div
         initial={{ y: -50, opacity: 0 }}
@@ -96,7 +96,7 @@ const Login = () => {
         </div>
 
         <motion.div
-          className="bg-gray-800/80 backdrop-blur-sm md:p-8 p-4 rounded-2xl shadow-xl border border-gray-700 text-white"
+          className="md:bg-gray-800/80 md:backdrop-blur-sm md:p-8 p-4 md:rounded-2xl md:shadow-xl md:border border-gray-700 text-white"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}

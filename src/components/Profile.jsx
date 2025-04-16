@@ -128,7 +128,7 @@ const Profile = () => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center pb-5 px-5">
       <motion.div
-        className="h-full w-full max-w-2xl mx-auto text-white rounded-2xl shadow-xl border border-gray-700 p-6 backdrop-blur-sm bg-gray-800/80 mb-4"
+        className="h-full w-full max-w-2xl mx-auto text-white md:rounded-2xl md:shadow-xl md:border border-gray-700 p-6 backdrop-blur-sm md:bg-gray-800/80 mb-4"
         initial={{ y: 0, opacity: 0 }}
         animate={{ y: 20, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
