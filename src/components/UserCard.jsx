@@ -8,7 +8,7 @@ import noImage from "../assets/image/noImage.png";
 
 const UserCard = ({ data }) => {
   const dispatch = useDispatch();
-console.log(data)
+  console.log(data);
   const handleSwipe = (direction, id) => {
     console.log(direction);
     handleSendRequest(direction === "left" ? "ignored" : "interested", id);
@@ -78,7 +78,7 @@ console.log(data)
                   </div>
                 )}
 
-              {(data?.yearOfExperience && data?.yearOfExperience>0 ) && (
+              {data?.yearOfExperience && data?.yearOfExperience > 0 && (
                 <div className="text-gray-300 mb-2 text-xs sm:text-sm">
                   <span>{data.yearOfExperience}</span>
                   <span className="ml-1">
@@ -90,9 +90,16 @@ console.log(data)
               )}
 
               {data.bio && (
-                <p className="text-sm text-gray-200 mt-2 leading-relaxed overflow-auto max-h-24">
-                  {capitalized(data?.bio)}
-                </p>
+                <div className=" max-h-16 relative group w-full max-w-xs hideScrollbar overflow-auto">
+                  <p
+                    className="text-sm text-gray-200 mt-2 leading-relaxed
+        overflow-hidden text-ellipsis whitespace-nowrap
+        group-hover:whitespace-pre-line group-hover:overflow-auto group-hover:max-h-60
+        scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent transition-all duration-300 ease-in-out"
+                  >
+                    {capitalized(data?.bio)}
+                  </p>
+                </div>
               )}
             </div>
 
