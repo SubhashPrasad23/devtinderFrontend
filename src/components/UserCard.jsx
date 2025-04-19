@@ -8,7 +8,6 @@ import noImage from "../assets/image/noImage.png";
 
 const UserCard = ({ data }) => {
   const dispatch = useDispatch();
-  console.log(data);
   const handleSwipe = (direction, id) => {
     console.log(direction);
     handleSendRequest(direction === "left" ? "ignored" : "interested", id);

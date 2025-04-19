@@ -1,101 +1,107 @@
-import { useEffect, useState, useRef } from "react"
-import ConnectionsList from "../components/ConnectionList"
-import Chatbox from "../components/Chatbox"
-import { useDispatch, useSelector } from "react-redux"
-import { addConnection } from "../features/connectionSlice"
-import axios from "axios"
-import createSocketConnection from "../utils/socket"
-import { NavLink } from "react-router-dom"
-import { UserCheck } from "lucide-react"
-import Loading from "../components/Loading"
-import { useMobile } from "../hooks/useMobile"
+import { useEffect, useState } from "react";
+import ConnectionsList from "../components/ConnectionList";
+import Chatbox from "../components/Chatbox";
+import { useDispatch, useSelector } from "react-redux";
+import { addConnection } from "../features/connectionSlice";
+import axios from "axios";
+import createSocketConnection from "../utils/socket";
+import { NavLink } from "react-router-dom";
+import { UserCheck } from "lucide-react";
+import Loading from "../components/Loading";
+import { useMobile } from "../hooks/useMobile";
 
 const Chat = () => {
-  const [selectedConnection, setSelectedConnection] = useState(null)
-  const [message, setMessage] = useState("")
-  const [messages, setMessages] = useState([])
-  const [menuOpen, setMenuOpen] = useState(false)
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true)
-  const connections = useSelector((store) => store.connections || [])
-  const loggedInUser = useSelector((store) => store.user)
-  const socketRef = useRef(null)
-  const isMobile = useMobile()
+  const [selectedConnection, setSelectedConnection] = useState(null);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const connections = useSelector((store) => store.connections || []);
+  const loggedInUser = useSelector((store) => store.user);
+  const isMobile = useMobile();
+  const [socket, setSocket] = useState(null);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen)
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   useEffect(() => {
-    socketRef.current = createSocketConnection()
-    const handleReceivedMessage = ({ firstName, text, senderId, connectionId }) => {
-      if (!selectedConnection || connectionId !== selectedConnection._id) return
+    const socket = createSocketConnection();
+    setSocket(socket);
 
-      setMessages((prev) => [...prev, { firstName, text, senderId }])
-    }
-
-    socketRef.current.on("receivedMessage", handleReceivedMessage)
+    socket.on("receivedMessage", ({ firstName, text, senderId }) => {
+      setMessages((prev) => [...prev, { firstName, text, senderId }]);
+    });
 
     return () => {
-      socketRef.current.off("receivedMessage", handleReceivedMessage)
-      socketRef.current.disconnect()
-    }
-  }, [])
+      socket.disconnect();
+    };
+  }, [loggedInUser?._id]);
 
   useEffect(() => {
     const fetchConnections = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/connections`, {
-          withCredentials: true,
-        })
-        dispatch(addConnection(response?.data?.data))
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/user/connections`,
+          {
+            withCredentials: true,
+          }
+        );
+        dispatch(addConnection(response?.data?.data));
       } catch (error) {
-        console.error("Error fetching connections", error)
+        console.error("Error fetching connections", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchConnections()
-  }, [])
+    fetchConnections();
+  }, []);
 
   useEffect(() => {
-    if (!isMobile) {
-      setMenuOpen(false)
-    }
-  }, [isMobile])
+    if (!isMobile) setMenuOpen(false);
+  }, [isMobile]);
 
   const handleSelectConnection = async (connection) => {
-    if (!socketRef.current) return
+    if (!socket) return;
 
-    setSelectedConnection(connection)
-    setMessages([])
-    socketRef.current.emit("join", connection._id, loggedInUser._id, connection.firstName)
+    setSelectedConnection(connection);
+    setMessages([]);
+
+    socket.emit(
+      "join",
+      connection?._id,
+      loggedInUser?._id,
+      connection?.firstName
+    );
 
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/chat/${connection._id}`, {
-        withCredentials: true,
-      })
-      setMessages(response.data.messages || [])
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/chat/${connection._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setMessages(response.data.messages || []);
     } catch (error) {
-      console.error("Error fetching chat messages:", error)
+      console.error("Error fetching chat messages:", error);
     }
-  }
+  };
 
   const handleSendMessage = () => {
-    if (!socketRef.current || !selectedConnection || !message.trim()) return
+    if (!socket || !selectedConnection || !message.trim()) return;
 
     const newMessage = {
       connectionId: selectedConnection._id,
       senderId: loggedInUser._id,
       firstName: loggedInUser.firstName,
       text: message,
-    }
+    };
 
-    socketRef.current.emit("sendMessage", newMessage)
-    setMessages((prev) => [...prev, newMessage])
-    setMessage("")
-  }
+    setMessage("");
+    socket.emit("sendMessage", newMessage);
+  };
 
-  if (loading) return <Loading />
+  if (loading) return <Loading />;
 
   return (
     <div className="w-full flex flex-col md:flex-row md:h-[calc(100vh-90px)] h-[calc(100vh-70px)] overflow-hidden border border-gray-700 relative mobile-chat-container">
@@ -122,8 +128,12 @@ const Chat = () => {
       ) : (
         <div className="h-full w-full flex flex-1 flex-col items-center justify-center">
           <UserCheck className="w-16 h-16 text-gray-600 mb-4" />
-          <h3 className="text-xl font-bold mb-2 text-gray-600">No connections yet</h3>
-          <p className="mb-6 text-gray-400">Connect with devs to start chatting!</p>
+          <h3 className="text-xl font-bold mb-2 text-gray-600">
+            No connections yet
+          </h3>
+          <p className="mb-6 text-gray-400">
+            Connect with devs to start chatting!
+          </p>
           <NavLink
             to="/app"
             className="inline-flex text-white items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full hover:from-purple-700 hover:to-blue-600 transition-all shadow-lg hover:shadow-purple-500/20"
@@ -133,7 +143,7 @@ const Chat = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

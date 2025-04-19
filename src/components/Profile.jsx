@@ -48,10 +48,12 @@ const Profile = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.skills.trim()) newErrors.skills = "Skills are required";
-    if (!formData.yearsOfExperience) newErrors.yearsOfExperience = "Experience is required";
+    if (!formData.yearsOfExperience)
+      newErrors.yearsOfExperience = "Experience is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.age) newErrors.age = "Age is required";
     setErrors(newErrors);
@@ -138,7 +140,11 @@ const Profile = () => {
             onClick={toggleEditMode}
             className="bg-purple-600 hover:bg-purple-700 p-2 rounded-full cursor-pointer"
           >
-            {!isEditing ? <Edit className="w-6 h-6" /> : <X className="w-6 h-6" />}
+            {!isEditing ? (
+              <Edit className="w-6 h-6" />
+            ) : (
+              <X className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -155,11 +161,13 @@ const Profile = () => {
                   className="h-full w-full  object-cover object-top"
                   alt="Profile"
                 />
-              ):(    <img
+              ) : (
+                <img
                   src={noImage}
                   className="h-full w-full object-cover"
                   alt="Profile"
-                />)}
+                />
+              )}
             </div>
 
             <input
@@ -186,7 +194,12 @@ const Profile = () => {
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-gray-300 mb-2" htmlFor="firstName">First Name</label>
+                  <label
+                    className="block text-gray-300 mb-2"
+                    htmlFor="firstName"
+                  >
+                    First Name
+                  </label>
                   <motion.input
                     id="firstName"
                     name="firstName"
@@ -199,10 +212,19 @@ const Profile = () => {
                     }`}
                     animate={shakeIfError("firstName")}
                   />
-                  {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+                  {errors.firstName && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.firstName}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-gray-300 mb-2" htmlFor="lastName">Last Name</label>
+                  <label
+                    className="block text-gray-300 mb-2"
+                    htmlFor="lastName"
+                  >
+                    Last Name
+                  </label>
                   <input
                     id="lastName"
                     name="lastName"
@@ -215,12 +237,18 @@ const Profile = () => {
                     }`}
                     animate={shakeIfError("lastName")}
                   />
-                  {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+                  {errors.lastName && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.lastName}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-300 mb-2" htmlFor="email">Email</label>
+                <label className="block text-gray-300 mb-2" htmlFor="email">
+                  Email
+                </label>
                 <input
                   id="email"
                   name="email"
@@ -233,7 +261,9 @@ const Profile = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-gray-300 mb-2" htmlFor="gender">Gender</label>
+                  <label className="block text-gray-300 mb-2" htmlFor="gender">
+                    Gender
+                  </label>
                   <motion.select
                     id="gender"
                     name="gender"
@@ -244,16 +274,19 @@ const Profile = () => {
                       errors.gender ? "border-red-500" : "border-gray-600"
                     }`}
                     animate={shakeIfError("gender")}
-
                   >
                     <option value="">Select gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </motion.select>
-                  {errors.gender && <p className="text-red-400 text-sm mt-1">{errors.gender}</p>}
+                  {errors.gender && (
+                    <p className="text-red-400 text-sm mt-1">{errors.gender}</p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-gray-300 mb-2" htmlFor="age">Age</label>
+                  <label className="block text-gray-300 mb-2" htmlFor="age">
+                    Age
+                  </label>
                   <motion.input
                     id="age"
                     name="age"
@@ -265,14 +298,17 @@ const Profile = () => {
                       errors.age ? "border-red-500" : "border-gray-600"
                     }`}
                     animate={shakeIfError("age")}
-
                   />
-                  {errors.age && <p className="text-red-400 text-sm mt-1">{errors.age}</p>}
+                  {errors.age && (
+                    <p className="text-red-400 text-sm mt-1">{errors.age}</p>
+                  )}
                 </div>
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-300 mb-2" htmlFor="skills">Skills</label>
+                <label className="block text-gray-300 mb-2" htmlFor="skills">
+                  Skills
+                </label>
                 <motion.input
                   id="skills"
                   name="skills"
@@ -284,13 +320,19 @@ const Profile = () => {
                     errors.skills ? "border-red-500" : "border-gray-600"
                   }`}
                   animate={shakeIfError("skills")}
-
                 />
-                {errors.skills && <p className="text-red-400 text-sm mt-1">{errors.skills}</p>}
+                {errors.skills && (
+                  <p className="text-red-400 text-sm mt-1">{errors.skills}</p>
+                )}
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-300 mb-2" htmlFor="yearsOfExperience">Years of Experience</label>
+                <label
+                  className="block text-gray-300 mb-2"
+                  htmlFor="yearsOfExperience"
+                >
+                  Years of Experience
+                </label>
                 <motion.input
                   id="yearsOfExperience"
                   name="yearsOfExperience"
@@ -299,16 +341,23 @@ const Profile = () => {
                   onChange={handleChange}
                   disabled={!isEditing}
                   className={`w-full px-4 py-2 bg-gray-700/50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    errors.yearsOfExperience ? "border-red-500" : "border-gray-600"
+                    errors.yearsOfExperience
+                      ? "border-red-500"
+                      : "border-gray-600"
                   }`}
                   animate={shakeIfError("yearsOfExperience")}
-
                 />
-                {errors.yearsOfExperience && <p className="text-red-400 text-sm mt-1">{errors.yearsOfExperience}</p>}
+                {errors.yearsOfExperience && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.yearsOfExperience}
+                  </p>
+                )}
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-300 mb-2" htmlFor="bio">Bio</label>
+                <label className="block text-gray-300 mb-2" htmlFor="bio">
+                  Bio
+                </label>
                 <textarea
                   id="bio"
                   name="bio"
@@ -318,7 +367,6 @@ const Profile = () => {
                   className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
                   rows="4"
                   placeholder="Tell others about yourself..."
-
                 ></textarea>
               </div>
 

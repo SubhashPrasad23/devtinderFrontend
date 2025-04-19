@@ -6,15 +6,18 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../features/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // New state for password visibility
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({ email: "", password: "" });
-
+console.log(showPassword)
   const shakeIfError = (field) =>
     errors[field] ? { x: [-8, 8, -6, 6, 0] } : {};
 
@@ -61,7 +64,8 @@ const Login = () => {
         navigate("/app");
       }
     } catch (error) {
-      toast.error(error.response?.data || "Login failed");
+      console.log(error)
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -130,20 +134,34 @@ const Login = () => {
               <label className="block text-gray-300 mb-2" htmlFor="password">
                 Password
               </label>
+              <div className="relative">
+
               <motion.input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 bg-gray-700/50 border ${
                   errors.password ? "border-red-500" : "border-gray-600"
                 } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500`}
                 placeholder="••••••••"
-                autoComplete="true" 
+                autoComplete="off" 
 
                 animate={shakeIfError("password")}
                 transition={{ duration: 0.4 }}
               />
+              <button
+                  type="button"
+                  onClick={()=>{setShowPassword(!showPassword)}}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-red-400 text-sm mt-1">{errors.password}</p>
               )}
