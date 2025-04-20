@@ -21,6 +21,8 @@ const Chat = () => {
   const loggedInUser = useSelector((store) => store.user);
   const isMobile = useMobile();
   const [socket, setSocket] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState("");
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -29,7 +31,9 @@ const Chat = () => {
     setSocket(socket);
 
     socket.on("receivedMessage", ({ firstName, text, senderId }) => {
-      setMessages((prev) => [...prev, { firstName, text, senderId }]);
+      if (senderId !== loggedInUser._id) {
+        setMessages((prev) => [...prev, { firstName, text, senderId }]);
+      }
     });
 
     return () => {

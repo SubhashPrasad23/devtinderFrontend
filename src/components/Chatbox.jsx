@@ -1,37 +1,48 @@
-import { useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useSelector } from "react-redux"
-import { Send, Menu } from "lucide-react"
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
+import { Send, Menu } from "lucide-react";
 
-const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessage, isMobile, toggleMenu }) => {
-  const loggedInUser = useSelector((store) => store?.user)
-  const scrollRef = useRef(null)
-  const messagesContainerRef = useRef(null)
+const ChatBox = ({
+  selectedConnection,
+  messages,
+  message,
+  onChange,
+  onSendMessage,
+  isMobile,
+  toggleMenu,
+}) => {
+  const loggedInUser = useSelector((store) => store?.user);
+  const scrollRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!message.trim()) return
-    onSendMessage(message)
-  }
+    e.preventDefault();
+    if (!message.trim()) return;
+    onSendMessage(message);
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      handleSubmit(e)
+      handleSubmit(e);
     }
-  }
+  };
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "instant" })
+      scrollRef.current.scrollIntoView({ behavior: "instant" });
     }
-  }, [messages])
+  }, [messages]);
 
   if (!selectedConnection) {
     return (
       <div className="flex-1 w-full bg-gray-900 flex flex-col items-center justify-center p-8 text-center">
         {isMobile && (
           <div className="absolute top-4 left-4 z-50">
-            <button onClick={toggleMenu} className="p-2 rounded-full bg-gray-800 hover:bg-gray-700">
+            <button
+              onClick={toggleMenu}
+              className="p-2 rounded-full bg-gray-800 hover:bg-gray-700"
+            >
               <Menu className="h-6 w-6 text-white" />
             </button>
           </div>
@@ -53,7 +64,9 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
               />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Start a Conversation</h3>
+          <h3 className="text-xl font-bold text-white mb-2">
+            Start a Conversation
+          </h3>
           <p className="text-gray-400 mb-6">
             {isMobile
               ? "Tap the menu button to select a connection"
@@ -70,19 +83,23 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
           )}
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="w-full bg-gray-900 flex flex-col h-full">
       <div className="bg-gray-800 p-4 border-b border-gray-700 flex items-center">
         {isMobile && (
-          <button onClick={toggleMenu} className="p-2 mr-2 rounded-full hover:bg-gray-700">
+          <button
+            onClick={toggleMenu}
+            className="p-2 mr-2 rounded-full hover:bg-gray-700"
+          >
             <Menu className="h-6 w-6 text-white" />
           </button>
         )}
         <div className="w-10 h-10 flex-shrink-0 rounded-full overflow-hidden mr-3 border-2 border-purple-500/30 flex items-center justify-center bg-purple-500/10">
-          {selectedConnection?.photoURL && selectedConnection?.photoURL !== "" ? (
+          {selectedConnection?.photoURL &&
+          selectedConnection?.photoURL !== "" ? (
             <img
               src={selectedConnection.photoURL}
               className="h-full w-full "
@@ -96,8 +113,10 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
         </div>
         <div className="min-w-0 overflow-hidden">
           <h3 className="font-bold text-white truncate">
-            {selectedConnection.firstName.charAt(0).toUpperCase() + selectedConnection.firstName.slice(1)}{" "}
-            {selectedConnection.lastName.charAt(0).toUpperCase() + selectedConnection.lastName.slice(1)}
+            {selectedConnection.firstName.charAt(0).toUpperCase() +
+              selectedConnection.firstName.slice(1)}{" "}
+            {selectedConnection.lastName.charAt(0).toUpperCase() +
+              selectedConnection.lastName.slice(1)}
           </h3>
         </div>
       </div>
@@ -115,7 +134,11 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`mb-4 flex ${msg?.senderId === loggedInUser?._id ? "justify-end" : "justify-start"}`}
+              className={`mb-4 flex ${
+                msg?.senderId === loggedInUser?._id
+                  ? "justify-end"
+                  : "justify-start"
+              }`}
             >
               <div
                 className={`max-w-[80%] p-3 rounded-lg  ${
@@ -129,10 +152,10 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
               </div>
             </div>
           ))}
+
           <div ref={scrollRef} />
         </AnimatePresence>
       </div>
-
       <form
         onSubmit={handleSubmit}
         className="p-4 border-t border-gray-700 bg-gray-800/80 sticky bottom-0 left-0 right-0"
@@ -163,7 +186,7 @@ const ChatBox = ({ selectedConnection, messages, message, onChange, onSendMessag
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ChatBox
+export default ChatBox;
