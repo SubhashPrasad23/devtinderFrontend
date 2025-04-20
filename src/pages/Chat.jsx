@@ -37,6 +37,7 @@ const Chat = () => {
     });
 
     return () => {
+      socket.off("receivedMessage");
       socket.disconnect();
     };
   }, [loggedInUser?._id]);
@@ -100,6 +101,7 @@ const Chat = () => {
       firstName: loggedInUser.firstName,
       text: message,
     };
+    setMessages((prev) => [...prev, newMessage]);
 
     setMessage("");
     socket.emit("sendMessage", newMessage);
