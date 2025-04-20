@@ -63,7 +63,7 @@ const ConnectionsList = ({ connections, selectedId, onSelectConnection, isMobile
               {connection?.photoURL && connection?.photoURL !== "" ? (
                 <img
                   src={connection?.photoURL }
-                  className="h-full w-full r"
+                  className="h-full w-full rounded-full"
                   alt="profile"
                 />
               ) : (

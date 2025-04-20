@@ -102,7 +102,7 @@ const ChatBox = ({
           selectedConnection?.photoURL !== "" ? (
             <img
               src={selectedConnection.photoURL}
-              className="h-full w-full "
+              className="h-full w-full rounded-full"
               alt="profile"
             />
           ) : (
